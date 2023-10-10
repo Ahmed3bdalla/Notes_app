@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
 // ignore: camel_case_types
 class Edit_Note extends StatefulWidget {
@@ -25,9 +24,7 @@ class Edit_Note extends StatefulWidget {
 class _Edit_NoteState extends State<Edit_Note> {
   String? title;
   String? discreption;
-  ImagePicker imagePicker = ImagePicker();
   // ignore: prefer_typing_uninitialized_variables
-  var pickedimg;
   var noteref = Hive.box("note");
 
   void updateNote({required int notekey}) async {
@@ -44,67 +41,17 @@ class _Edit_NoteState extends State<Edit_Note> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text("Edit Note"),
-        actions: [
-          IconButton(
-            tooltip: "add foto",
-            icon: const Icon(Icons.add_a_photo),
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return SizedBox(
-                        height: 150,
-                        child: Column(
-                          children: [
-                            const Text(
-                              "Choose your Photo",
-                              style: TextStyle(fontSize: 25),
-                            ),
-                            ListTile(
-                              leading: const Icon(
-                                Icons.camera_alt,
-                                color: Colors.blue,
-                              ),
-                              title: const Text("Camera"),
-                              onTap: () async {
-                                pickedimg = await imagePicker.pickImage(
-                                    source: ImageSource.camera);
-                                if (pickedimg != null) {
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(
-                                Icons.photo_album,
-                                color: Colors.blue,
-                              ),
-                              title: const Text("Gallary"),
-                              onTap: () async {
-                                pickedimg = await imagePicker.pickImage(
-                                    source: ImageSource.gallery);
-                                if (pickedimg != null) {
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                            ),
-                          ],
-                        ));
-                  });
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(children: [
           TextFormField(
             initialValue: widget.title,
             maxLines: 1,
-            maxLength: 50,
+            maxLength: 25,
             decoration: const InputDecoration(
-                labelText: "Title", prefixIcon: Icon(Icons.title)),
+                filled: true,
+                labelText: "Title",
+                prefixIcon: Icon(Icons.title)),
             onChanged: (value) {
               setState(() {
                 title = value;
@@ -134,7 +81,7 @@ class _Edit_NoteState extends State<Edit_Note> {
               onPressed: () {
                 if (title != null && discreption != null) {
                   updateNote(notekey: widget.notekey);
-                  Navigator.popAndPushNamed(context, "HomePage");
+                  Navigator.of(context).pushReplacementNamed("HomePage");
                 } else {
                   showDialog(
                       context: context,

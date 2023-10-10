@@ -81,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: searchopened == false
             ? const Text("Notes app")
             : TextFormField(
-                decoration: const InputDecoration(border: InputBorder.none),
+                decoration: const InputDecoration(
+                    hintText: "Search", border: InputBorder.none),
                 maxLines: 1,
                 onChanged: (value) {
                   filterNotes(input: value);
@@ -99,7 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
                     return view_Note(
                       title: filteredNotes.isEmpty
                           ? notesData[index]["Title"]
@@ -131,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 trailing: IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return Edit_Note(
                         title: filteredNotes.isEmpty
@@ -213,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //         ]),
           //       );
           //     });
-          Navigator.of(context).pushNamed("Add_Note");
+          Navigator.of(context).pushReplacementNamed("Add_Note");
         },
         tooltip: 'add note',
         child: const Icon(Icons.add),

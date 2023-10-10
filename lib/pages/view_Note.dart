@@ -2,6 +2,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:sticky/pages/HomePage.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class view_Note extends StatefulWidget {
@@ -51,11 +52,42 @@ class _view_NoteState extends State<view_Note> {
           ),
           ElevatedButton(
               onPressed: () {
-                deleteNote(notekey: widget.notekey!);
-                Navigator.pushNamed(context, "HomePage");
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: const Text("Wraning"),
+                          content: const Text("Are you sure to Delete this?"),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("Cancel")),
+                            TextButton(
+                                onPressed: () {
+                                  deleteNote(notekey: widget.notekey!);
+                                  Navigator.of(context).pop();
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const MyHomePage();
+                                  }));
+                                },
+                                // ignore: prefer_const_constructors
+                                child: Text("Ok")),
+                          ]);
+                    });
               },
               child: const Text(
                 "Delete",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed("HomePage");
+              },
+              child: const Text(
+                "Back",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ))
         ]),
