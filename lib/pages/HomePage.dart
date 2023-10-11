@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
           "key": e,
           "Title": currentNote["Title"],
           "Description": currentNote["Description"],
+          "Time": currentNote["Time"]
           // "ImageName": currentNote["ImageName"]
         };
       }).toList();
@@ -58,6 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed("Add_Note");
+        },
+        tooltip: 'add note',
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         centerTitle: true,
         actions: [
@@ -90,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
       ),
       body: ListView.separated(
+          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -98,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(20)),
                 onTap: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
@@ -112,10 +123,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       notekey: filteredNotes.isEmpty
                           ? notesData[index]["key"]
                           : filteredNotes[index]["key"],
+                      time: filteredNotes.isEmpty
+                          ? notesData[index]["Time"]
+                          : filteredNotes[index]["Time"],
                     );
                   }));
                 },
-                isThreeLine: true,
                 title: Text(
                   filteredNotes.isEmpty
                       ? "${notesData[index]["Title"]}"
@@ -124,11 +137,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: const TextStyle(
                       fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text(
-                  filteredNotes.isEmpty
-                      ? "${notesData[index]["Description"]}"
-                      : filteredNotes[index]["Title"],
-                  maxLines: 1,
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 150,
+                    ),
+                    Text(
+                      filteredNotes.isEmpty
+                          ? "${notesData[index]["Description"]}"
+                          : filteredNotes[index]["Description"],
+                      maxLines: 1,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 25,
+                    ),
+                    Text(
+                        filteredNotes.isEmpty
+                            ? "${notesData[index]["Time"]}"
+                            : filteredNotes[index]["Time"],
+                        maxLines: 1,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  ],
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.edit),
@@ -157,69 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           itemCount:
               filteredNotes.isEmpty ? notesData.length : filteredNotes.length),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        onPressed: () {
-          // showModalBottomSheet(
-          //     isDismissible: false,
-          //     context: context,
-          //     builder: (context) {
-          //       return Container(
-          //         height: 700,
-          //         margin: EdgeInsets.all(10),
-          //         child: ListView(children: [
-          //           TextField(
-          //             maxLength: 50,
-          //             maxLines: 1,
-          //             onChanged: (value) {
-          //               setState(() {
-          //                 title = value;
-          //               });
-          //             },
-          //             decoration: const InputDecoration(hintText: "Title"),
-          //           ),
-          //           TextField(
-          //             maxLines: 1,
-          //             maxLength: 100,
-          //             onChanged: (value) {
-          //               setState(() {
-          //                 discreption = value;
-          //               });
-          //             },
-          //             decoration: const InputDecoration(hintText: "Note"),
-          //           ),
-          //           ElevatedButton(
-          //               onPressed: () {
-          //                 try {
-          //                   if (title != null && discreption != null) {
-          //                     addNote(title: title!, description: discreption!);
-          //                     getNotes();
-          //                     Navigator.pop(context);
-          //                   } else {
-          //                     showDialog(
-          //                         context: context,
-          //                         builder: (context) {
-          //                           return const AlertDialog(
-          //                             title: Text("Error...!"),
-          //                             content:
-          //                                 Text("please write y Title & Note"),
-          //                           );
-          //                         });
-          //                   }
-          //                 } catch (e) {
-          //                   print(e);
-          //                 }
-          //               },
-          //               child: Text("Add Note"))
-          //         ]),
-          //       );
-          //     });
-          Navigator.of(context).pushReplacementNamed("Add_Note");
-        },
-        tooltip: 'add note',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

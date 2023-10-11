@@ -20,6 +20,7 @@ class _Add_NoteState extends State<Add_Note> {
     await noteref.add({
       "Title": title,
       "Description": description,
+      "Time": "${DateTime.now()}"
     });
   }
 
@@ -90,7 +91,7 @@ class _Add_NoteState extends State<Add_Note> {
                           builder: (context) {
                             return const AlertDialog(
                               title: Text("Error...!"),
-                              content: Text("please fill adsfasd"),
+                              content: Text("please fill Title & Note"),
                             );
                           });
                     }

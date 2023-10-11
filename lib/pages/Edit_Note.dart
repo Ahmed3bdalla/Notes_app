@@ -31,6 +31,7 @@ class _Edit_NoteState extends State<Edit_Note> {
     await noteref.put(notekey, {
       "Title": title,
       "Description": discreption,
+      "Time": "${DateTime.now()}"
     });
   }
 

@@ -1,5 +1,4 @@
 // ignore: file_names
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sticky/pages/HomePage.dart';
@@ -9,11 +8,13 @@ class view_Note extends StatefulWidget {
   String? title;
   String? descreption;
   int? notekey;
+  String? time;
   view_Note(
       {super.key,
       required this.title,
       required this.descreption,
-      required this.notekey});
+      required this.notekey,
+      required this.time});
 
   @override
   State<view_Note> createState() => _view_NoteState();
@@ -28,6 +29,7 @@ class _view_NoteState extends State<view_Note> {
 
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: const Text("View Note")),
       body: Padding(
@@ -35,20 +37,29 @@ class _view_NoteState extends State<view_Note> {
         child: ListView(children: [
           Text(
             "${widget.title}",
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
-          const Divider(
+          Divider(
             thickness: 5,
-            height: 20,
+            height: h / 20,
           ),
           Text(
             "${widget.descreption}",
             style: const TextStyle(
-              fontSize: 25,
+              fontSize: 18,
             ),
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: h / 30,
+          ),
+          Text(
+            "${widget.time}",
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(
+            height: h / 35,
           ),
           ElevatedButton(
               onPressed: () {
