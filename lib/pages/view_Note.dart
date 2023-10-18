@@ -79,10 +79,10 @@ class _view_NoteState extends State<view_Note> {
                                 onPressed: () {
                                   deleteNote(notekey: widget.notekey!);
                                   Navigator.of(context).pop();
-                                  Navigator.pushReplacement(context,
+                                  Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(builder: (context) {
                                     return const MyHomePage();
-                                  }));
+                                  }), (route) => false);
                                 },
                                 // ignore: prefer_const_constructors
                                 child: Text("Ok")),
@@ -93,14 +93,6 @@ class _view_NoteState extends State<view_Note> {
                 "Delete",
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed("HomePage");
-              },
-              child: const Text(
-                "Back",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))
         ]),
       ),
     );

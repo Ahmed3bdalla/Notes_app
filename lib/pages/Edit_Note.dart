@@ -82,7 +82,8 @@ class _Edit_NoteState extends State<Edit_Note> {
               onPressed: () {
                 if (title != null && discreption != null) {
                   updateNote(notekey: widget.notekey);
-                  Navigator.of(context).pushReplacementNamed("HomePage");
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("HomePage", (route) => false);
                 } else {
                   showDialog(
                       context: context,

@@ -69,7 +69,7 @@ class _Add_NoteState extends State<Add_Note> {
                       padding: const EdgeInsets.symmetric(horizontal: 50)),
                   child: const Text("Cancel"),
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed("HomePage");
+                    Navigator.of(context).pushNamedAndRemoveUntil("HomePage",(route) => false,);
                   }),
               const SizedBox(
                 width: 10,

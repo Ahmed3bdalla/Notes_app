@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed("Add_Note");
+          Navigator.of(context).pushNamed("Add_Note");
         },
         tooltip: 'add note',
         child: const Icon(Icons.add),
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 onTap: () {
-                  Navigator.pushReplacement(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
                     return view_Note(
                       title: filteredNotes.isEmpty
@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 trailing: IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    Navigator.pushReplacement(context,
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return Edit_Note(
                         title: filteredNotes.isEmpty
