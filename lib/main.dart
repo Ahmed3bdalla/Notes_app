@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sticky/pages/HomePage.dart';
-import 'package:sticky/pages/add_Note.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,14 +24,10 @@ class MyApp extends StatelessWidget {
   var messengerkey = GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         scaffoldMessengerKey: messengerkey,
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        routes: {
-          "Add_Note": (context) => const Add_Note(),
-          "HomePage": (context) => const MyHomePage(),
-        },
-        home: const MyHomePage());
+        home: MyHomePage());
   }
 }
