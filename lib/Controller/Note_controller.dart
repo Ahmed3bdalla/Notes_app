@@ -8,11 +8,8 @@ class NoteController extends GetxController {
   List<Map<String, dynamic>> Nlist = [];
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
-  int? notekey;
 
-  void addNote(context) async {
-    String title = titleController.text;
-    String content = contentController.text;
+  void addNote({required String title,required String content}) async {
     if (title.isEmpty) {
       title = "No Title";
     }
@@ -30,9 +27,7 @@ class NoteController extends GetxController {
     update();
   }
 
-  void updateNote() async {
-    final title = titleController.text;
-    final content = contentController.text;
+  void updateNote({required String title,required String content,required int notekey}) async {
     await noteref.put(notekey, {
       "Title": title,
       "Description": content,

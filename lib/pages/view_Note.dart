@@ -10,6 +10,7 @@ class view_Note extends StatelessWidget {
   NoteController controller = Get.put(NoteController());
   @override
   Widget build(BuildContext context) {
+    int index = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         title: const Text("View Note"),
@@ -20,30 +21,19 @@ class view_Note extends StatelessWidget {
                 color: Colors.red,
               ),
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Warning"),
-                        content:
-                            const Text("Are you sure to delete this Note?"),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("Cancel")),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                controller.deleteNote(
-                                    notekey: controller.notekey!);
-                                Get.offAll(() => MyHomePage());
-                              },
-                              child: const Text("Ok"))
-                        ],
-                      );
-                    });
+                Get.defaultDialog(
+                  barrierDismissible: false,
+                  title: "Warning",
+                  content: const Text("Are you sure to delete this Note?"),
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                    controller.deleteNote(notekey: controller.Nlist[index]["key"]);
+                    Get.offAll(() => MyHomePage());
+                  },
+                );
               })
         ],
       ),
@@ -51,7 +41,7 @@ class view_Note extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: ListView(children: [
           Text(
-            controller.titleController.text,
+            controller.Nlist[index]["Title"],
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const Divider(
@@ -59,7 +49,7 @@ class view_Note extends StatelessWidget {
             height: 20,
           ),
           Text(
-            controller.contentController.text,
+            controller.Nlist[index]["Description"],
             style: const TextStyle(
               fontSize: 25,
             ),

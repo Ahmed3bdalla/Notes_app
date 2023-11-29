@@ -61,12 +61,7 @@ class MyHomePage extends StatelessWidget {
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
                   onTap: () {
-                    controller.titleController.text =
-                        controller.Nlist[index]["Title"];
-                    controller.contentController.text =
-                        controller.Nlist[index]["Description"];
-                    controller.notekey = controller.Nlist[index]["key"];
-                    Get.to(() => view_Note());
+                    Get.to(() => view_Note(),arguments: index);
                   },
                   isThreeLine: true,
                   title: Text(
@@ -103,12 +98,7 @@ class MyHomePage extends StatelessWidget {
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      controller.titleController.text =
-                          controller.Nlist[index]["Title"];
-                      controller.contentController.text =
-                          controller.Nlist[index]["Description"];
-                      controller.notekey = controller.Nlist[index]["key"];
-                      Get.to(() => Edit_Note());
+                      Get.to(() => Edit_Note(),arguments: index);
                     },
                   ),
                 ),
@@ -120,30 +110,6 @@ class MyHomePage extends StatelessWidget {
           );
         },
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-// Column(
-//                   crossAxisAlignment = CrossAxisAlignment.start,
-//                   children = [
-//                     SizedBox(
-//                       height: MediaQuery.of(context).size.height / 150,
-//                     ),
-//                     Text(
-//                     controller.filteredNotes.isEmpty
-//                         ? "${controller.Nlist[index]["Description"]}"
-//                         : controller.filteredNotes[index]["Description"],
-//                     maxLines: 2,
-//                   ),
-//                     SizedBox(
-//                       height: MediaQuery.of(context).size.height / 25,
-//                     ),
-//                     Text(
-//                         controller.filteredNotes.isEmpty
-//                             ? "${controller.Nlist[index]["CreatedAt"]}"
-//                             : controller.filteredNotes[index]["CreatedAt"],
-//                         maxLines: 1,
-//                         style: const TextStyle(fontWeight: FontWeight.bold)),
-//                   ],
-//                 ),

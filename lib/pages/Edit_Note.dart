@@ -1,4 +1,3 @@
-
 // ignore: file_names
 // ignore_for_file: unnecessary_null_comparison
 import 'package:flutter/material.dart';
@@ -13,6 +12,9 @@ class Edit_Note extends StatelessWidget {
   NoteController controller = Get.put(NoteController());
   @override
   Widget build(BuildContext context) {
+    int index = Get.arguments;
+    controller.titleController.text = controller.Nlist[index]["Title"];
+    controller.contentController.text = controller.Nlist[index]["Description"];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Note"),
@@ -22,35 +24,32 @@ class Edit_Note extends StatelessWidget {
               // ignore: duplicate_ignore,
               onPressed: () {
                 if (controller.contentController.text.isNotEmpty) {
-                  controller.updateNote();
+                  controller.updateNote(
+                      notekey: controller.Nlist[index]["key"],
+                      title: controller.titleController.text,
+                      content: controller.contentController.text);
                   Get.offAll(() => MyHomePage());
                 } else {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const AlertDialog(
-                          title: Text("Wraning"),
-                          content: Text("please write your Note"),
-                        );
-                      });
+                  Get.defaultDialog(
+                    title: "Wraning",
+                    content: const Text("please write your Note"),
+                  );
                 }
               })
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          CustomTextField(
-              controller: controller.titleController,
-              labeltext: "Title",
-              maxlines: 1,
-              maxLength: 25),
-          CustomTextField(
-              controller: controller.contentController,
-              labeltext: "Note",
-              maxlines: null,
-              maxLength: null),
-        ]),
-      ),
+      body: ListView(children: [
+        CustomTextField(
+            controller: controller.titleController,
+            labeltext: "Title",
+            maxlines: 1,
+            maxLength: 25),
+        CustomTextField(
+            controller: controller.contentController,
+            labeltext: "Note",
+            maxlines: null,
+            maxLength: null),
+      ]),
     );
   }
 }
